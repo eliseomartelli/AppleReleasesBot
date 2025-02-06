@@ -22,5 +22,5 @@ jobs:
         with:
           push: true
           tags: |
-            eliseomartelli/applereleasesbot:${{ github.ref_name }}
-            eliseomartelli/applereleasesbot:latest
+            ghcr.io/eliseomartelli/applereleasesbot:${{ github.ref_name }}
+            ghcr.io/eliseomartelli/applereleasesbot:latest
