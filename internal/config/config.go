@@ -1,19 +1,19 @@
-package main
+package config
 
 import (
 	"log"
 	"os"
 )
 
-type config struct {
+type Config struct {
 	TelegramBotToken string
 	TelegramChatID   string
 	RSSFeedURL       string
 	CacheFilePath    string
 }
 
-func LoadConfig() *config {
-	return &config{
+func LoadConfig() *Config {
+	return &Config{
 		TelegramBotToken: getEnv("TELEGRAM_BOT_TOKEN", ""),
 		TelegramChatID:   getEnv("TELEGRAM_CHAT_ID", ""),
 		RSSFeedURL:       getEnv("RSS_FEED_URL", "https://developer.apple.com/news/releases/rss/releases.rss"),

@@ -1,4 +1,4 @@
-package main
+package model
 
 import "fmt"
 
@@ -15,3 +15,4 @@ func (r Release) String() string {
 type RSS struct {
 	Releases []Release `xml:"channel>item"`
 }
+

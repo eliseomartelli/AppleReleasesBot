@@ -6,7 +6,7 @@ COPY . .
 
 RUN go mod download
 
-RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o applereleases
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o applereleases ./cmd/applereleasesbot
 
 FROM alpine:3.21
 
