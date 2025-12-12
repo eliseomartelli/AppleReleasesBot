@@ -71,5 +71,6 @@ func generateReleaseText(releases []model.Release) string {
 	for _, r := range releases {
 		buf.WriteString(r.String())
 	}
+	buf.WriteString("\nhttps://support.apple.com/en-us/100100")
 	return buf.String()
 }
