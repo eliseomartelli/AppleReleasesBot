@@ -1,9 +1,6 @@
 # Binaries
-applereleases
-applereleasesbot
-
-# State
-newscache
+./applereleases
+./applereleasesbot
 
 # OS specific
 .DS_Store
