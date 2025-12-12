@@ -1,0 +1,33 @@
+name: Scheduled Check
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run every hour
+  workflow_dispatch:
+
+jobs:
+  check-releases:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'
+
+      - name: Run Bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: go run ./cmd/applereleasesbot
+
+      - name: Commit and Push if changed
+        run: |
+          git config --global user.name "AppleReleasesBot"
+          git config --global user.email "bot@noreply.github.com"
+          git add newscache
+          git diff --staged --quiet || (git commit -m "chore: update cache [skip ci]" && git push)

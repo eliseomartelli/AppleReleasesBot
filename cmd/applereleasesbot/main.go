@@ -20,21 +20,23 @@ func main() {
 	telegramService := telegram.NewService(cfg.TelegramBotToken, cfg.TelegramChatID)
 	stateManager := state.NewManager(cfg.CacheFilePath)
 
-	interval := flag.Duration("interval", 0, "Polling interval for continuous checking (e.g., 5m, 1h)")
+	interval := flag.Duration("interval", 0, "Polling interval for continuous checking (e.g., 5m, 1h). Set to 0 for one-shot run.")
 	flag.Parse()
 
-	if *interval <= 0 {
-		fmt.Println("Please specify a valid polling interval.")
-		return
-	}
+	if *interval > 0 {
+		log.Printf("Starting task every %s...\n", *interval)
+		ticker := time.NewTicker(*interval)
+		defer ticker.Stop()
 
-	log.Printf("Starting task every %s...\n", *interval)
-	ticker := time.NewTicker(*interval)
-	defer ticker.Stop()
-
-	for range ticker.C {
+		for range ticker.C {
+			if err := run(cfg, appleService, telegramService, stateManager); err != nil {
+				log.Printf("Error running task: %v", err)
+			}
+		}
+	} else {
+		log.Println("Running one-shot task...")
 		if err := run(cfg, appleService, telegramService, stateManager); err != nil {
-			log.Printf("Error running task: %v", err)
+			log.Fatalf("Error running task: %v", err)
 		}
 	}
 }

@@ -1,9 +1,9 @@
 # Binaries
-applereleases
-applereleasesbot
+/applereleases
+/applereleasesbot
 
 # State
-newscache
+# newscache (tracked for git persistence)
 
 # OS specific
 .DS_Store
